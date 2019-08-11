@@ -29,9 +29,10 @@ namespace CRUD_RazorPage_2_1 {
         }
 
         private void ConfigureDatabase (IServiceCollection services) {
-            services.AddDbContext<ApplicationDbContext> (options =>
-                options.UseNpgsql (Configuration.GetConnectionString ("DefaultConnection"))
-            );
+            var connectionString = Configuration.GetConnectionString ("DefaultConnection");
+            services.AddEntityFrameworkNpgsql ()
+                .AddDbContext<ApplicationDbContext> (options => options.UseNpgsql (connectionString))
+                .BuildServiceProvider ();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
